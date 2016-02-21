@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //startActivity(new Intent(this,Login.class));
                 break;
             case R.id.bMemeber:
-                startActivity(new Intent(this,Login.class));
+                startActivity(new Intent(this ,Login.class));
                 break;
             case R.id.bGuest:
                 //startActivity(new Intent(th));
