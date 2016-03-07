@@ -24,10 +24,38 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         bSignUp=(Button) findViewById(R.id.SignUp);
         bSignUp.setOnClickListener(this);
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d("Message: ", "onStart");
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d("Message: ","onResume");
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d("Message: ","onPause");
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d("Message: ","onStop");
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d("Message: ", "onDestroy");
+    }
     private void LoadUserInfo(){
         Mongodb db = new Mongodb();
-        List<String> message=db.createNewUser(UserName.getText().toString(),PassWord.getText().toString(),Email.getText().toString(),
-                PhoneNum.getText().toString());
+        String user=UserName.getText().toString();
+        String password=PassWord.getText().toString();
+        String email=Email.getText().toString();
+        String phoneNum=PhoneNum.getText().toString();
+        List<String> message=db.createNewUser(user,password,email,phoneNum);
         if(message.size()==0){
             Log.d("DB","Failed");
         }

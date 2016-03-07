@@ -3,6 +3,7 @@ package com.example.course.easylease;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View;
@@ -35,7 +36,31 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         db.closeConn();
         return mark;
     }
-
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d("Message: ", "onStart");
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d("Message: ","onResume");
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d("Message: ","onPause");
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d("Message: ", "onStop");
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d("Message: ", "onDestroy");
+    }
 
     @Override
     public void onClick(View v) {
