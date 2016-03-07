@@ -19,7 +19,7 @@ public class UserDB {
     private static final String Table_Name="UserTable";
 
     public UserDB(Context context){
-        dbHelper=new DatabaseHelper(context);
+        dbHelper=DatabaseHelper.getInstance(context);
         db=dbHelper.getWritableDatabase();
     }
     /* return -1 if the insert execution isn't successful*/
@@ -29,7 +29,7 @@ public class UserDB {
         values.put("Password",info[1]);
         values.put("Email",info[2]);
         values.put("Phone_number",info[3]);
-        return this.db.insert("User",null,values);
+        return this.db.insert(Table_Name,null,values);
     }
     public void delete(){
         //TODO: Implement delete

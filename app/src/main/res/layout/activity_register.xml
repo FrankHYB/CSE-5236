@@ -10,7 +10,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.course.easylease.Register">
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Username"
+        android:layout_height="wrap_content"/>
 
+    <EditText
+        android:id="@+id/Username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+    android:layout_width="wrap_content"
+    android:text="Password"
+    android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <TextView
         android:layout_width="wrap_content"
         android:text="Email"
@@ -21,24 +38,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-
     <TextView
         android:layout_width="wrap_content"
-        android:text="Username"
+        android:text="Phone"
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/Username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="Passward"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/Passward"
+        android:id="@+id/Phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
