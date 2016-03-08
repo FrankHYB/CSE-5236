@@ -7,46 +7,52 @@ import android.view.View;
 import android.widget.Button;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    Button bLoginOut,bMember,bGuest;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    Button bLoginOut, bMember, bGuest;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bLoginOut=(Button) findViewById(R.id.bLoginOut);
-        bMember=(Button) findViewById(R.id.bMemeber);
-        bGuest=(Button) findViewById(R.id.bGuest);
+        bLoginOut = (Button) findViewById(R.id.bLoginOut);
+        bMember = (Button) findViewById(R.id.bMemeber);
+        bGuest = (Button) findViewById(R.id.bGuest);
         bLoginOut.setOnClickListener(this);
         bMember.setOnClickListener(this);
         bLoginOut.setOnClickListener(this);
     }
+
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         Log.d("Message: ", "onStart");
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        Log.d("Message: ","onResume");
+        Log.d("Message: ", "onResume");
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
-        Log.d("Message: ","onPause");
+        Log.d("Message: ", "onPause");
     }
+
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
-        Log.d("Message: ","onStop");
+        Log.d("Message: ", "onStop");
     }
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
-        Log.d("Message: ","onDestroy");
+        Log.d("Message: ", "onDestroy");
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //startActivity(new Intent(this,Login.class));
                 break;
             case R.id.bMemeber:
-                startActivity(new Intent(this ,Login.class));
+                startActivity(new Intent(this, Login.class));
                 break;
             case R.id.bGuest:
                 //startActivity(new Intent(th));

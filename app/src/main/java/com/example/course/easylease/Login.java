@@ -8,56 +8,62 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;
+
 import java.util.*;
+
 import com.facebook.FacebookSdk;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
-    private Button bLogin,bSignUp;
-    private EditText Username,Password;
+    private Button bLogin, bSignUp;
+    private EditText Username, Password;
     private TextView eMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        bLogin=(Button) findViewById(R.id.bLogin);
-        bSignUp=(Button) findViewById(R.id.bSignUp);
-        Username=(EditText) findViewById(R.id.Username);
-        Password=(EditText) findViewById(R.id.Password);
-        eMessage=(TextView) findViewById(R.id.Error_message);
+        bLogin = (Button) findViewById(R.id.bLogin);
+        bSignUp = (Button) findViewById(R.id.bSignUp);
+        Username = (EditText) findViewById(R.id.Username);
+        Password = (EditText) findViewById(R.id.Password);
+        eMessage = (TextView) findViewById(R.id.Error_message);
         bLogin.setOnClickListener(this);
         bSignUp.setOnClickListener(this);
     }
 
-    private boolean checkLogin(){
-        Mongodb db = new Mongodb();
-        String username=this.Username.getText().toString();
-        String password=this.Username.getText().toString();
-        boolean mark=db.queryPassword(username,password);
-        db.closeConn();
-        return mark;
+    private boolean checkLogin() {
+        String username = this.Username.getText().toString();
+        String password = this.Username.getText().toString();
+
+        return new UserDB(this).queryPassword(username, password);
     }
+
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         Log.d("Message: ", "onStart");
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        Log.d("Message: ","onResume");
+        Log.d("Message: ", "onResume");
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
-        Log.d("Message: ","onPause");
+        Log.d("Message: ", "onPause");
     }
+
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         Log.d("Message: ", "onStop");
     }
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         Log.d("Message: ", "onDestroy");
     }
@@ -66,15 +72,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bLogin:
-                if(checkLogin()){
-                    startActivity(new Intent(this,MainActivity.class));
+                if (checkLogin()) {
+                    startActivity(new Intent(this, MainActivity.class));
                     finish();
-                }else{
+                } else {
                     eMessage.setVisibility(View.VISIBLE);
-                }  
+                }
                 break;
             case R.id.bSignUp:
-                startActivity(new Intent(this,Register.class));
+                startActivity(new Intent(this, Register.class));
                 break;
         }
     }
