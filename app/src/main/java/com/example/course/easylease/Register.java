@@ -25,6 +25,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         PhoneNum = (EditText) findViewById(R.id.Phone);
         bSignUp = (Button) findViewById(R.id.SignUp);
         bSignUp.setOnClickListener(this);
+
     }
 
     @Override
