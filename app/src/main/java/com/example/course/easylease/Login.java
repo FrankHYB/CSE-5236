@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         bSignUp.setOnClickListener(this);
     }
 
+
     private boolean checkLogin() {
         String username = this.Username.getText().toString();
         String password = this.Username.getText().toString();

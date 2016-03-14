@@ -7,6 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import java.util.*;
 
 
@@ -59,12 +65,44 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void LoadUserInfo() {
-        String user = UserName.getText().toString();
-        String password = PassWord.getText().toString();
-        String email = Email.getText().toString();
-        String phoneNum = PhoneNum.getText().toString();
+        final String user = UserName.getText().toString();
+        final String password = PassWord.getText().toString();
+        final String email = Email.getText().toString();
+        final String phoneNum = PhoneNum.getText().toString();
 
-        new UserDB(this).insert(new String[]{user, password, email, phoneNum});
+        //RequestQueue queue=VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
+        //TODO: input the url
+        String url="";
+
+        StringRequest stringRequest= new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        //mTextView.setText("Response is: "+ response.substring(0,500));
+                        Log.d("Message from server",response);
+                    }
+                }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //TextView.setText("That didn't work!");
+                }
+
+
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", user);
+                params.put("email", email);
+                params.put("password", password);
+                params.put("phoneNum",phoneNum);
+                return params;
+            }
+
+        };
+        VolleyController.getInstance(this.getApplicationContext()).addToRequestQueue(stringRequest);
+        //new UserDB(this).insert(new String[]{user, password, email, phoneNum});
     }
 
     @Override
