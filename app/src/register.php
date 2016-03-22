@@ -36,8 +36,7 @@ else{
     }else{
         $error="Both username and email has been registered";
     }
-    $response=$error;
-    echo $response;
 }
-
+$response=$error;
+echo $response;
 ?>
