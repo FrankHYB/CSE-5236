@@ -84,7 +84,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         // Display the first 500 characters of the response string.
                         //mTextView.setText("Response is: "+ response.substring(0,500));
                         result=response;
-                        Message.setText(response.substring(0,50));
+                        Message.setText(response);
                     }
                 }, new Response.ErrorListener() {
                 @Override
@@ -114,7 +114,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.SignUp:
                 LoadUserInfo();
-                if(result.length()==0)
+                if(result.length()!=0)
                     finish();
                 break;
         }
