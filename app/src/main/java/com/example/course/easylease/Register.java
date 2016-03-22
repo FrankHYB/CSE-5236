@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,8 +19,9 @@ import java.util.*;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     Button bSignUp;
-    EditText Email, UserName, PassWord, PhoneNum;
-
+    EditText Email,UserName, PassWord, PhoneNum;
+    TextView Message;
+    private String result="";
     //private UserDB userDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         UserName = (EditText) findViewById(R.id.Username);
         PassWord = (EditText) findViewById(R.id.Password);
         PhoneNum = (EditText) findViewById(R.id.Phone);
+        Message = (TextView) findViewById(R.id.message);
         bSignUp = (Button) findViewById(R.id.SignUp);
         bSignUp.setOnClickListener(this);
 
@@ -37,31 +40,31 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Message: ", "onStart");
+        //Log.d("Message: ", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Message: ", "onResume");
+       // Log.d("Message: ", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("Message: ", "onPause");
+        //Log.d("Message: ", "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("Message: ", "onStop");
+        //Log.d("Message: ", "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("Message: ", "onDestroy");
+        //Log.d("Message: ", "onDestroy");
     }
 
     private void LoadUserInfo() {
@@ -72,7 +75,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         //RequestQueue queue=VolleyController.getInstance(this.getApplicationContext()).getRequestQueue();
         //TODO: input the url
-        String url="";
+        String url="http://52.34.59.35/YBAndroid/register.php";
 
         StringRequest stringRequest= new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -80,7 +83,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         //mTextView.setText("Response is: "+ response.substring(0,500));
-                        Log.d("Message from server",response);
+                        result=response;
+                        Message.setText(response.substring(0,50));
                     }
                 }, new Response.ErrorListener() {
                 @Override
@@ -110,7 +114,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.SignUp:
                 LoadUserInfo();
-                finish();
+                if(result.length()==0)
+                    finish();
                 break;
         }
     }

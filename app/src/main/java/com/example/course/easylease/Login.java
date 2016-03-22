@@ -42,31 +42,31 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Message: ", "onStart");
+       // Log.d("Message: ", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Message: ", "onResume");
+        //Log.d("Message: ", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("Message: ", "onPause");
+        //Log.d("Message: ", "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("Message: ", "onStop");
+       // Log.d("Message: ", "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("Message: ", "onDestroy");
+      //  Log.d("Message: ", "onDestroy");
     }
 
     @Override
