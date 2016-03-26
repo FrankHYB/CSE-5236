@@ -26,31 +26,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Message: ", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Message: ", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("Message: ", "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("Message: ", "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("Message: ", "onDestroy");
     }
 
     @Override

@@ -9,7 +9,7 @@ else {
     $connection=new MongoClient('mongodb://jjshao:jj5914@ds045531.mlab.com:45531/ybhe');
     $db=$connection->ybhe;
     //Select the collecton
-    $user=$db->User;
+    $user=$db->androidUser;
     $query=$user->findOne(array('username'=>$username,'password'=>$password));
     if($query!=NULL){
         $response=$username;
