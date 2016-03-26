@@ -2,11 +2,16 @@
 <manifest package="com.example.course.easylease"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:label="EasyLease"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name="com.example.course.easylease.Splash"
                   android:launchMode="standard"
                   android:screenOrientation="portrait">
@@ -16,8 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name="com.example.course.easylease.MainActivity">
         </activity>
+
         <activity
             android:name="com.example.course.easylease.Login"
             android:launchMode="standard"
@@ -29,9 +36,8 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.example.course.easylease.Register">
 
+        <activity android:name="com.example.course.easylease.Register">
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

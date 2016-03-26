@@ -1,8 +1,5 @@
 package com.example.course.easylease;
 
-/**
- * Created by heyub_000 on 2/22/2016.
- */
 public class Users {
     private String User_Name;
     private String Password;
