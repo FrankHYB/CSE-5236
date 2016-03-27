@@ -3,6 +3,8 @@ package com.example.course.easylease;
 import android.app.Activity;
 import android.os.AsyncTask;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 import okhttp3.FormBody;
@@ -22,14 +24,10 @@ public class PublishHouseInfo extends Activity {
         @Override
         protected Boolean doInBackground(House... params) {
             House house = params[0];
+            Gson gson = new Gson();
 
             RequestBody body = new FormBody.Builder()
-                    .add("latitude", String.valueOf(house.getLatitude()))
-                    .add("longitude", String.valueOf(house.getLongitude()))
-                    .add("address", house.getAddress())
-                    .add("name", house.getName())
-                    .add("description", house.getDescription())
-                    .add("price", String.valueOf(house.getPrice()))
+                    .add("data", gson.toJson(house))
                     .build();
 
             Request request = new Request.Builder()
