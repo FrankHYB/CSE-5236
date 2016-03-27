@@ -1,31 +1,59 @@
 package com.example.course.easylease;
 
-/**
- * Created by yubin on 3/26/16.
- */
 public class House {
-    private String name;
-    private int price;
+    private double latitude;
+    private double longitude;
     private String address;
+
+    private String name;
     private String description;
-    public House(String name,int price,String address){
-        this.name=name;
-        this.price=price;
-        this.address=address;
+    private int price;
+
+    public double getLatitude() {
+        return latitude;
     }
-    public void SetDescription(String des){
-        this.description=des;
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
-    public String getName(){
-        return this.name;
+
+    public double getLongitude() {
+        return longitude;
     }
-    public int getPrice(){
-        return this.price;
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
-    public String getDescription(){
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
+    public int getPrice() {
+        return price;
+    }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
