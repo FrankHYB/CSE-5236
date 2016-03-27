@@ -21,8 +21,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     Button bSignUp;
     EditText Email, UserName, PassWord, PhoneNum;
     TextView Message;
-    private String result = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +49,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         //mTextView.setText("Response is: "+ response.substring(0,500));
-                        result = response;
                         Message.setText(response);
+                        if (response.length() == 0) {
+                            finish();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -82,9 +82,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             case R.id.SignUp:
                 LoadUserInfo();
 
-                if (result.length() != 0) {
-                    finish();
-                }
+
                 break;
         }
     }
