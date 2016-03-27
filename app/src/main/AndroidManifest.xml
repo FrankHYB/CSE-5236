@@ -15,6 +15,7 @@
                   android:launchMode="standard"
                   android:screenOrientation="portrait">
 
+
         </activity>
         <activity android:name="com.example.course.easylease.MainActivity">
         </activity>
@@ -23,18 +24,18 @@
             android:launchMode="standard"
             android:permission="com.example.course.myapp.LAUNCHACTIVITY"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name="com.example.course.easylease.Register">
 
         </activity>
 
         <activity android:name="com.example.course.easylease.MapActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

@@ -18,14 +18,14 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/bMemeber"
-        android:text="Members?"
+        android:id="@+id/bFinder"
+        android:text="Finding a lease?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/bGuest"
-        android:text="View as guest"
+        android:id="@+id/bPoster"
+        android:text="Want to post?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

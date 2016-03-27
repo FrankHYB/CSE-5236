@@ -29,7 +29,9 @@
     <EditText
         android:id="@+id/Password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        />
 
     <TextView
         android:id="@+id/Error_message"
@@ -49,5 +51,23 @@
         android:text="Create New Account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="60dip"
+        android:maxHeight="35dip"
+        android:minHeight="35dip"
+
+        android:minWidth="10dip"
+        android:maxWidth="10dip"
+
+        android:visibility="visible" />
+
+
 
 </LinearLayout>

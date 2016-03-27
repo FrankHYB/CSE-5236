@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button bLoginOut, bMember, bGuest;
+    Button bLoginOut, bFinder, bPoster;
 
 
     @Override
@@ -16,10 +16,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bLoginOut = (Button) findViewById(R.id.bLoginOut);
-        bMember = (Button) findViewById(R.id.bMemeber);
-        bGuest = (Button) findViewById(R.id.bGuest);
-        bLoginOut.setOnClickListener(this);
-        bMember.setOnClickListener(this);
+        bFinder = (Button) findViewById(R.id.bFinder);
+        bPoster = (Button) findViewById(R.id.bPoster);
+        bPoster.setOnClickListener(this);
+        bFinder.setOnClickListener(this);
         bLoginOut.setOnClickListener(this);
     }
 
@@ -54,10 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bLoginOut:
                 //startActivity(new Intent(this,Login.class));
                 break;
-            case R.id.bMemeber:
-                startActivity(new Intent(this, Login.class));
+            case R.id.bFinder:
+                startActivity(new Intent(this, MapActivity.class));
+                finish();
                 break;
-            case R.id.bGuest:
+            case R.id.bPoster:
                 //startActivity(new Intent(th));
                 break;
         }

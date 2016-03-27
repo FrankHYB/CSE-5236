@@ -3,7 +3,6 @@ package com.example.course.easylease;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
@@ -11,13 +10,12 @@ import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.IOException;
 import java.util.*;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.facebook.FacebookSdk;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button bLogin, bSignUp;
@@ -38,44 +36,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private void checkLogin() {
+    private String checkLogin() throws IOException{
         final String username = this.Username.getText().toString();
-        final String password = this.Username.getText().toString();
+        final String password = this.Password.getText().toString();
         String url = "http://52.34.59.35/YBAndroid/login.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response.substring(0,500));
-                        Log.d("login message:: ",response);
-                        if (!errorMessage.equals(response)) {
-                            //Anonymous class usage
-                            startActivity(new Intent(Login.this, MainActivity.class));
-                            finish();
-                        } else {
-                            eMessage.setVisibility(View.VISIBLE);
-                        }
+        RequestBody requestBody = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //TextView.setText("That didn't work!");
-            }
-
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
-            }
-
-        };
-        VolleyController.getInstance(this.getApplicationContext()).addToRequestQueue(stringRequest);
+        String response = HttpController.getInstance().run(url, requestBody);
+        return response;
 
     }
 
@@ -83,8 +54,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bLogin:
-                checkLogin();
-
+                new LoginTask().execute();
                 break;
             case R.id.bSignUp:
                 startActivity(new Intent(this, Register.class));
@@ -92,11 +62,30 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
     private class LoginTask extends AsyncTask<Void, Void, Boolean>{
-
-
+        boolean isNetworkSuccess = true;
         @Override
         protected Boolean doInBackground(Void... params) {
-            return null;
+            try{
+                String response = checkLogin();
+                if(!errorMessage.equals(response)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (IOException e){
+                isNetworkSuccess = false;
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(aBoolean && isNetworkSuccess){
+                startActivity(new Intent(Login.this,MainActivity.class));
+                finish();
+            }else if(!aBoolean && isNetworkSuccess){
+                eMessage.setVisibility(TextView.VISIBLE);
+            }
         }
     }
 }
