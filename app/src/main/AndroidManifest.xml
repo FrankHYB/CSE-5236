@@ -2,19 +2,19 @@
 <manifest package="com.example.course.easylease"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <application
         android:allowBackup="true"
         android:label="EasyLease"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD0Qu_k01FKaIOxpdV6QfyQKkx96d8jYNE"/>
+
         <activity android:name="com.example.course.easylease.Splash"
                   android:launchMode="standard"
                   android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name="com.example.course.easylease.MainActivity">
         </activity>
@@ -23,11 +23,7 @@
             android:launchMode="standard"
             android:permission="com.example.course.myapp.LAUNCHACTIVITY"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
         <activity android:name="com.example.course.easylease.Register">
 
@@ -35,6 +31,8 @@
 
         <activity android:name="com.example.course.easylease.MapActivity">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
