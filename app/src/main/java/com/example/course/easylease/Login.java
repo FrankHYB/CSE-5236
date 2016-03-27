@@ -81,7 +81,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if(aBoolean && isNetworkSuccess){
-                startActivity(new Intent(Login.this,MainActivity.class));
+                Intent main = new Intent(Login.this,MainActivity.class);
+                main.putExtra("username",Username.getText().toString());
+                startActivity(main);
                 finish();
             }else if(!aBoolean && isNetworkSuccess){
                 eMessage.setVisibility(TextView.VISIBLE);

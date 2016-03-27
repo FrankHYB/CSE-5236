@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.course.easylease"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.course.easylease">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:label="EasyLease"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD0Qu_k01FKaIOxpdV6QfyQKkx96d8jYNE" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD0Qu_k01FKaIOxpdV6QfyQKkx96d8jYNE"/>
-
-        <activity android:name="com.example.course.easylease.Splash"
-                  android:launchMode="standard"
-                  android:screenOrientation="portrait">
-
-
-        </activity>
-        <activity android:name="com.example.course.easylease.MainActivity">
-        </activity>
         <activity
-            android:name="com.example.course.easylease.Login"
+            android:name=".Splash"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".Login"
             android:launchMode="standard"
             android:permission="com.example.course.myapp.LAUNCHACTIVITY"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.course.easylease.Register">
-
-        </activity>
-
-        <activity android:name="com.example.course.easylease.MapActivity">
-
-        </activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".PostHouse"></activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 </manifest>
