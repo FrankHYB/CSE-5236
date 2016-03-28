@@ -3,7 +3,9 @@ package com.example.course.easylease;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,11 +36,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         bLogin.setOnClickListener(this);
         bSignUp.setOnClickListener(this);
     }
-
+    private boolean checkValidity(String username, String password){
+        if(TextUtils.isEmpty(username)|| TextUtils.isEmpty(password)){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     private String checkLogin() throws IOException{
         final String username = this.Username.getText().toString();
         final String password = this.Password.getText().toString();
+        if(checkValidity(username,password)){
+            return errorMessage;
+        }
         String url = "http://52.34.59.35/YBAndroid/login.php";
         RequestBody requestBody = new FormBody.Builder()
                 .add("username", username)
