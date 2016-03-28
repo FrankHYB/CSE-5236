@@ -4,7 +4,6 @@ $response='';
 if(empty($_POST['user'])||empty($_POST['data'])){
     $response = 'No user or data';
 }else{
-
     $data = $_POST['address'];
     $username = $_POST['user'];
     $data_arr = json_decode($data);
@@ -17,4 +16,5 @@ if(empty($_POST['user'])||empty($_POST['data'])){
     $connection->close();
 }
 echo $response;
+?>
 
