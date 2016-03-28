@@ -1,5 +1,6 @@
 package com.example.course.easylease;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,8 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
     TextView response;
     Button bPost, bCancel;
     private String user;
-    private String name,address,price,description,zipcode;
+    private String name,address,price,description,zipcode,latitude,longtitude;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         bCancel = (Button) findViewById(R.id.bCancel);
         bPost.setOnClickListener(this);
         bCancel.setOnClickListener(this);
+        context = getApplicationContext();
         if(getIntent().getExtras().get("username")!=null)
             user = getIntent().getExtras().get("username").toString();
         else{
@@ -55,6 +58,9 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                 price = Price.getText().toString();
                 description = Description.getText().toString();
                 zipcode = Zipcode.getText().toString();
+                House house = new House(address,zipcode,name,description,Integer.parseInt(price),context);
+                longtitude = Double.toString(house.getLongitude());
+                latitude = Double.toString(house.getLatitude());
                 if(checkVaildity()){
                     response.setText("Please fill up all fields");
                 }else {
@@ -85,6 +91,8 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                     .add("price", price)
                     .add("zipcode", zipcode)
                     .add("description", description)
+                    .add("longtitude", longtitude)
+                    .add("latitude", latitude)
                     .add("user", user)
                     .build();
             try {
