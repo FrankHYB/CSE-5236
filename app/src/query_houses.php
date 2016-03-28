@@ -25,9 +25,23 @@ if(empty($_POST['price']) && empty($_POST['longtitude']) && empty($_POST['latitu
         $num = $num + 1;
     }
     $tuple["connection"] -> close();
-}else if(empty($_POST['price']) && !empty($_POST['longtitude']) && !empty($_POST['latitude'])){
+
+}else if(empty($_POST['price']) && !empty($_POST['longtitudeMax']) && !empty($_POST['latitudeMax'])
+    && !empty($_POST['longtitudeMin']) && !empty($_POST['latitudeMin'])){
     //output houses that sits in such lo and la
-    //$houses = getCollection();
+    $tuple = getCollection();
+    $houses = $tuple["collection"];
+    $lonRange = array('longtitude' => array('$gt' => (double) $_POST['longtitudeMin'], '$lt' => (double) $_POST['longtitudeMax']));
+    $latRange = array('latitude' => array('gt' => (double) $_POST['latitudeMin']), '$lt' => (double) $_POST['latitudeMax']);
+    $cursor = $houses -> find(array('$and' => array($lonRange , $latRange)));
+
+    $num = 0;
+    while($cursor!=null && $cursor->hasNext()){
+        $array[$num] = $cursor->next();
+        $num = $num + 1;
+    }
+    $tuple["connection"] -> close();
+
 
 }else if(!empty($_POST['price'])){
     //output houses that are between this price
