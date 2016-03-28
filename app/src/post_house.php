@@ -11,7 +11,7 @@ if(empty($_POST['user'])||empty($_POST['data'])){
     $db=$connection->ybhe;
     $houses=$db->House;
     $data_arr['owner'] = $username;
-    $user->insert($data_arr);
+    $houses->insert($data_arr);
     $response = "House information set up successfully";
     $connection->close();
 }
