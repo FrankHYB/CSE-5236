@@ -62,7 +62,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
 
     private class publishHouseInfo extends AsyncTask<House, Void, Boolean> {
         boolean isNetworkSuccess = true;
-
+        String responseFromServer="_";
         @Override
         protected Boolean doInBackground(House... params) {
             String url = "http://52.34.59.35/YBAndroid/post_house.php";
@@ -74,18 +74,20 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                     .add("user", user)
                     .build();
             try {
-                String response = HttpController.getInstance().run(url, body);
+                responseFromServer = HttpController.getInstance().run(url, body);
                 return true;
                 //TODO: Inhibit the same address
             } catch (IOException e) {
-                return false;
+                isNetworkSuccess=false;
+                return isNetworkSuccess;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (isNetworkSuccess) {
-                response.setText("House successfully posted!");
+                response.setText(responseFromServer);
+                finish();
             }
         }
     }
