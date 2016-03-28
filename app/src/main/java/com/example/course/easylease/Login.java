@@ -45,8 +45,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 .add("password", password)
                 .build();
 
-        String response = HttpController.getInstance().run(url, requestBody);
-        return response;
+        return HttpController.getInstance().run(url, requestBody);
 
     }
 
@@ -67,11 +66,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         protected Boolean doInBackground(Void... params) {
             try{
                 String response = checkLogin();
-                if(!errorMessage.equals(response)){
-                    return true;
-                }else{
-                    return false;
-                }
+                return !errorMessage.equals(response);
             }catch (IOException e){
                 isNetworkSuccess = false;
                 return false;

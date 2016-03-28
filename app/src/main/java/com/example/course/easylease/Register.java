@@ -1,21 +1,17 @@
 package com.example.course.easylease;
 
-import android.app.DownloadManager;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.io.InvalidObjectException;
-import java.util.*;
 
 import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 
 
@@ -50,9 +46,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 .add("email", email)
                 .add("phoneNum", phoneNum).build();
 
-        String response = HttpController.getInstance().run(url, requestBody);
-
-        return response;
+        return HttpController.getInstance().run(url, requestBody);
     }
 
     @Override
@@ -66,22 +60,20 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     private class LoginTask extends AsyncTask<Void, Void, Boolean> {
         private boolean isNetworkSuccess = true;
-        String response ="";
+        String response = "";
+
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
 
         }
+
         @Override
         protected Boolean doInBackground(Void... params) {
-            try{
-                response=LoadUserInfo();
-                if(response.length()==0){
-                    return true;
-                }else{
-                    return false;
-                }
-            }catch (IOException e){
-                Log.d("Message: ",""+e);
+            try {
+                response = LoadUserInfo();
+                return response.length() == 0;
+            } catch (IOException e) {
+                Log.d("Message: ", "" + e);
                 isNetworkSuccess = false;
                 return false;
             }
@@ -89,9 +81,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            if(aBoolean && isNetworkSuccess) {
+            if (aBoolean && isNetworkSuccess) {
                 finish();
-            }else if(!aBoolean){
+            } else if (!aBoolean) {
                 Message.setText(response);
             }
         }

@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.course.easylease">
+<manifest package="com.example.course.easylease"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
         android:label="EasyLease"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD0Qu_k01FKaIOxpdV6QfyQKkx96d8jYNE" />
+            android:value="AIzaSyD0Qu_k01FKaIOxpdV6QfyQKkx96d8jYNE"/>
 
         <activity
             android:name=".Splash"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".MainActivity"></activity>
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"/>
+
         <activity
             android:name=".Login"
             android:launchMode="standard"
-            android:permission="com.example.course.myapp.LAUNCHACTIVITY"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Register"></activity>
-        <activity android:name=".MapActivity"></activity>
-        <activity android:name=".PostHouse"></activity>
+        <activity android:name=".Register"/>
+        <activity android:name=".MapActivity"/>
+        <activity android:name=".PostHouse"/>
     </application>
 
 </manifest>
