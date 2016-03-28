@@ -3,6 +3,7 @@ package com.example.course.easylease;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
     TextView response;
     Button bPost, bCancel;
     private String user;
-
+    private String name,address,price,description,zipcode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,35 +47,38 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bPost:
-                House house = new House(Address.getText().toString(),
-                        Zipcode.getText().toString(),
-                        Name.getText().toString(),
-                        Description.getText().toString(),
-                        Integer.parseInt(Price.getText().toString()),
-                                getApplicationContext());
-                new publishHouseInfo().execute(house);
+                name = Name.getText().toString();
+                address = Address.getText().toString();
+                price = Price.getText().toString();
+                description = Description.getText().toString();
+                zipcode = Zipcode.getText().toString();
+                new publishHouseInfo().execute();
                 break;
             case R.id.bCancel:
+                finish();
                 break;
         }
     }
 
 
-    private class publishHouseInfo extends AsyncTask<House, Void, Boolean> {
+    private class publishHouseInfo extends AsyncTask<Void, Void, Boolean> {
         boolean isNetworkSuccess = true;
         String responseFromServer="_";
         @Override
-        protected Boolean doInBackground(House... params) {
+        protected Boolean doInBackground(Void... params) {
             String url = "http://52.34.59.35/YBAndroid/post_house.php";
 
-            House house = params[0];
-            Gson gson = new Gson();
             RequestBody body = new FormBody.Builder()
-                    .add("data", gson.toJson(house))
+                    .add("address", address)
+                    .add("name", name)
+                    .add("price", price)
+                    .add("zipcode", zipcode)
+                    .add("description", description)
                     .add("user", user)
                     .build();
             try {
                 responseFromServer = HttpController.getInstance().run(url, body);
+                Log.d("Message post: ", responseFromServer);
                 return true;
                 //TODO: Inhibit the same address
             } catch (IOException e) {
