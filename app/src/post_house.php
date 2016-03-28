@@ -1,5 +1,4 @@
 <?php
-
 $response='';
 if(empty($_POST['user'])||empty($_POST['name'])||empty($_POST['address'])
     ||empty($_POST['price'])||empty($_POST['description'])||empty($_POST['zipcode'])){

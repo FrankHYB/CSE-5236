@@ -3,6 +3,7 @@ package com.example.course.easylease;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,8 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         else{
             user="null";
         }
+        Log.d("Username: ", user);
+
     }
 
     @Override
@@ -52,7 +55,11 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                 price = Price.getText().toString();
                 description = Description.getText().toString();
                 zipcode = Zipcode.getText().toString();
-                new publishHouseInfo().execute();
+                if(checkVaildity()){
+                    response.setText("Please fill up all fields");
+                }else {
+                    new publishHouseInfo().execute();
+                }
                 break;
             case R.id.bCancel:
                 finish();
@@ -60,10 +67,14 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    private boolean checkVaildity(){
+        return TextUtils.isEmpty(this.address) || TextUtils.isEmpty(this.name) || TextUtils.isEmpty(this.address)
+                || TextUtils.isEmpty(this.description) || TextUtils.isEmpty(this.zipcode) || TextUtils.isEmpty(this.user);
+    }
 
     private class publishHouseInfo extends AsyncTask<Void, Void, Boolean> {
         boolean isNetworkSuccess = true;
-        String responseFromServer="_";
+        String responseFromServer="";
         @Override
         protected Boolean doInBackground(Void... params) {
             String url = "http://52.34.59.35/YBAndroid/post_house.php";
