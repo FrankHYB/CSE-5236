@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private String checkLogin() throws IOException{
         final String username = this.Username.getText().toString();
         final String password = this.Password.getText().toString();
-        if(checkValidity(username,password)){
+        if(!checkValidity(username,password)){
             return errorMessage;
         }
         String url = "http://52.34.59.35/YBAndroid/login.php";
