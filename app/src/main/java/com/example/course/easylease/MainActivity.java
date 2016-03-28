@@ -21,7 +21,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bPoster.setOnClickListener(this);
         bFinder.setOnClickListener(this);
         bLoginOut.setOnClickListener(this);
-        user = getIntent().getExtras().get("username").toString();
+        if(getIntent().getExtras().get("username")!=null)
+           user = getIntent().getExtras().get("username").toString();
+        else
+            user="null";
+        Log.d("Username: ",user);
     }
 
     @Override
@@ -53,16 +57,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bLoginOut:
-                //startActivity(new Intent(this,Login.class));
+                startActivity(new Intent(this,Login.class));
                 break;
             case R.id.bFinder:
-                Intent houseClass = new Intent(this, MapActivity.class);
-                houseClass.putExtra("username",user);
-                startActivity(houseClass);
+                Intent mapClass = new Intent(this, MapActivity.class);
+                mapClass.putExtra("username",user);
+                startActivity(mapClass);
                 finish();
                 break;
             case R.id.bPoster:
-                //startActivity(new Intent(th));
+                Intent postClass = new Intent(this, PostHouse.class);
+                postClass.putExtra("username",user);
+                startActivity(postClass);
                 break;
         }
     }
