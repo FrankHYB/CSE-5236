@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button bLoginOut, bFinder, bPoster;
-
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bPoster.setOnClickListener(this);
         bFinder.setOnClickListener(this);
         bLoginOut.setOnClickListener(this);
+        user = getIntent().getExtras().get("username").toString();
     }
 
     @Override
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //startActivity(new Intent(this,Login.class));
                 break;
             case R.id.bFinder:
-                startActivity(new Intent(this, MapActivity.class));
+                Intent houseClass = new Intent(this, MapActivity.class);
+                houseClass.putExtra("username",user);
+                startActivity(houseClass);
                 finish();
                 break;
             case R.id.bPoster:
