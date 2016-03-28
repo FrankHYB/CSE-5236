@@ -36,7 +36,11 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         bCancel = (Button) findViewById(R.id.bCancel);
         bPost.setOnClickListener(this);
         bCancel.setOnClickListener(this);
-        user = getIntent().getExtras().get("username").toString();
+        if(getIntent().getExtras().get("username")!=null)
+            user = getIntent().getExtras().get("username").toString();
+        else{
+            user="null";
+        }
     }
 
     @Override
@@ -47,8 +51,8 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                         Zipcode.getText().toString(),
                         Name.getText().toString(),
                         Description.getText().toString(),
-                        Integer.parseInt(Price.getText().toString())
-                );
+                        Integer.parseInt(Price.getText().toString()),
+                                getApplicationContext());
                 new publishHouseInfo().execute(house);
                 break;
             case R.id.bCancel:
