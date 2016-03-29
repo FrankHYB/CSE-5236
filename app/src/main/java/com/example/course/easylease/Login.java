@@ -18,12 +18,12 @@ import java.util.*;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
-
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button bLogin, bSignUp;
     private EditText Username, Password;
     private TextView eMessage;
     private final String errorMessage = "Username or password is invalid";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,18 +36,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         bLogin.setOnClickListener(this);
         bSignUp.setOnClickListener(this);
     }
-    private boolean checkValidity(String username, String password){
-        if(TextUtils.isEmpty(username)|| TextUtils.isEmpty(password)){
-            return false;
-        }else{
-            return true;
-        }
+
+    private boolean checkValidity(String username, String password) {
+        return !(TextUtils.isEmpty(username) || TextUtils.isEmpty(password));
     }
 
-    private String checkLogin() throws IOException{
+    private String checkLogin() throws IOException {
         final String username = this.Username.getText().toString();
         final String password = this.Password.getText().toString();
-        if(!checkValidity(username,password)){
+        if (!checkValidity(username, password)) {
             return errorMessage;
         }
         String url = "http://52.34.59.35/YBAndroid/login.php";
@@ -71,14 +68,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
-    private class LoginTask extends AsyncTask<Void, Void, Boolean>{
+
+    private class LoginTask extends AsyncTask<Void, Void, Boolean> {
         boolean isNetworkSuccess = true;
+
         @Override
         protected Boolean doInBackground(Void... params) {
-            try{
+            try {
                 String response = checkLogin();
                 return !errorMessage.equals(response);
-            }catch (IOException e){
+            } catch (IOException e) {
                 isNetworkSuccess = false;
                 return false;
             }
@@ -86,12 +85,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            if(aBoolean && isNetworkSuccess){
-                Intent main = new Intent(Login.this,MainActivity.class);
-                main.putExtra("username",Username.getText().toString());
+            if (aBoolean && isNetworkSuccess) {
+                Intent main = new Intent(Login.this, MainActivity.class);
+                main.putExtra("username", Username.getText().toString());
                 startActivity(main);
                 finish();
-            }else if(!aBoolean && isNetworkSuccess){
+            } else if (!aBoolean && isNetworkSuccess) {
                 eMessage.setVisibility(TextView.VISIBLE);
             }
         }

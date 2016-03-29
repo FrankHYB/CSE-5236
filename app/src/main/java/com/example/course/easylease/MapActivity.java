@@ -1,12 +1,14 @@
 package com.example.course.easylease;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,10 +20,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class MapActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
+    private String json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,12 @@ public class MapActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (!bundle.isEmpty() && !TextUtils.isEmpty(bundle.getString("json"))) {
+            json = bundle.getString("json");
+        }
     }
 
     @Override
@@ -42,7 +59,8 @@ public class MapActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_go_to_search:
-                Toast.makeText(this, "Search Icon Clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MapActivity.this, SearchHouseInfo.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -52,19 +70,29 @@ public class MapActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
 
         mMap.setOnMarkerClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
 
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(39.9831302, -83.1309133))
-                .title("Columbus"));
+        if (json != null) {
+            try {
+                JSONArray array = new JSONArray(json);
+                int size = array.length();
+
+                for (int i = 0; i < size; i++) {
+                    JSONObject house = array.getJSONObject(i);
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.valueOf(house.getString("latitude")),
+                                    Double.valueOf(house.getString("longtitude"))))
+                            .title(house.getString("name")));
+                }
+            } catch (JSONException e) {
+                // Should not happen
+            }
+        }
     }
 
     @Override

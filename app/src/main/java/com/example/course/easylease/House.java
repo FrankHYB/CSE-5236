@@ -17,20 +17,22 @@ public class House {
     private Context appcontext;
     private int price;
 
-    public House(String address,String zipCode,String name,String description,int price,Context context){
-        this.address= address;
+    public House(String address, String zipCode, String name, String description, int price, Context context) {
+        this.address = address;
         this.zipCode = zipCode;
         this.name = name;
         this.description = description;
         this.price = price;
-        appcontext=context;
+        appcontext = context;
         try {
             getLatLng(context);
-        }catch (IOException e){
+        } catch (IOException e) {
         }
     }
-    public House(){
+
+    public House() {
     }
+
     public double getLatitude() {
         return latitude;
     }
@@ -55,7 +57,7 @@ public class House {
         this.address = address;
         try {
             getLatLng(appcontext);
-        }catch (IOException e){
+        } catch (IOException e) {
         }
     }
 
