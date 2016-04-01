@@ -10,7 +10,6 @@
         android:label="EasyLease"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD0Qu_k01FKaIOxpdV6QfyQKkx96d8jYNE"/>
@@ -21,19 +20,21 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".SearchHouseInfo"/>
-
         <activity
             android:name=".Login"
             android:launchMode="standard"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".Register"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".PostHouse"/>
+        <activity android:name=".HouseDetailActivity">
+        </activity>
     </application>
 
 </manifest>

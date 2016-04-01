@@ -3,6 +3,8 @@ package com.example.course.easylease;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,10 +57,19 @@ public class House {
 
     public void setAddress(String address) {
         this.address = address;
+
         try {
             getLatLng(appcontext);
         } catch (IOException e) {
         }
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getName() {
@@ -83,6 +94,23 @@ public class House {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "House{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", address='" + address + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    public void setAppcontext(Context appcontext) {
+        this.appcontext = appcontext;
     }
 
     private void getLatLng(Context context) throws IOException {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
-public class SearchHouseInfo extends Activity implements View.OnClickListener {
+public class SearchHouseInfo extends AppCompatActivity implements View.OnClickListener {
     private EditText price;
 
     @Override

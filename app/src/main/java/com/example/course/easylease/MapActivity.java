@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,20 +18,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class MapActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
     private String json;
+
+    private List<House> houses = new LinkedList<>();
+    private List<MarkerOptions> markers = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,34 @@ public class MapActivity extends AppCompatActivity
 
         if (!bundle.isEmpty() && !TextUtils.isEmpty(bundle.getString("json"))) {
             json = bundle.getString("json");
+
+            try {
+                JSONArray array = new JSONArray(json);
+                int size = array.length();
+
+                for (int i = 0; i < size; i++) {
+                    JSONObject houseJSON = array.getJSONObject(i);
+
+                    House house = new House();
+                    house.setAppcontext(this);
+                    house.setLatitude(houseJSON.getDouble("latitude"));
+                    house.setLongitude(houseJSON.getDouble("longtitude"));
+                    house.setAddress(houseJSON.getString("address"));
+                    house.setZipCode(houseJSON.getString("zipcode"));
+                    house.setName(houseJSON.getString("name"));
+                    house.setDescription(houseJSON.getString("description"));
+                    house.setPrice(houseJSON.getInt("price"));
+
+                    markers.add(new MarkerOptions()
+                            .position(new LatLng(houseJSON.getDouble("latitude"),
+                                    houseJSON.getDouble("longtitude")))
+                            .title(houseJSON.getString("name")));
+
+                    houses.add(house);
+                }
+            } catch (JSONException e) {
+                // Should not happen
+            }
         }
     }
 
@@ -77,21 +107,8 @@ public class MapActivity extends AppCompatActivity
         mMap.setOnMarkerClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
 
-        if (json != null) {
-            try {
-                JSONArray array = new JSONArray(json);
-                int size = array.length();
-
-                for (int i = 0; i < size; i++) {
-                    JSONObject house = array.getJSONObject(i);
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.valueOf(house.getString("latitude")),
-                                    Double.valueOf(house.getString("longtitude"))))
-                            .title(house.getString("name")));
-                }
-            } catch (JSONException e) {
-                // Should not happen
-            }
+        for (MarkerOptions options : markers) {
+            mMap.addMarker(options);
         }
     }
 
@@ -104,7 +121,15 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Marker Clicked!", Toast.LENGTH_SHORT).show();
+        int index = indexOfHouse(marker.getTitle());
+
+        if (index != -1) {
+            Bundle bundle = new Bundle();
+            bundle.putString("house_info", houses.get(index).toString());
+            Intent intent = new Intent(MapActivity.this, HouseDetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -119,5 +144,15 @@ public class MapActivity extends AppCompatActivity
                 }
             }
         }
+    }
+
+    private int indexOfHouse(String name) {
+        for (int i = 0; i < houses.size(); i++) {
+            if (houses.get(i).getName().equals(name)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
