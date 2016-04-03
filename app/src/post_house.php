@@ -15,6 +15,7 @@ if(empty($_POST['user'])||empty($_POST['name'])||empty($_POST['address'])
     $latitude = $_POST['latitude'];
     $latitude = (double) $latitude;
     $username = $_POST['user'];
+    $image = $_POST['image'];
 
     $connection= new MongoClient('mongodb://jjshao:jj5914@ds045531.mlab.com:45531/ybhe');
     $db=$connection->ybhe;
@@ -28,7 +29,8 @@ if(empty($_POST['user'])||empty($_POST['name'])||empty($_POST['address'])
             "zipcode" => $zipcode,
             "longtitude" => $longtitude,
             "latitude" => $latitude,
-            "owner" => $username
+            "owner" => $username,
+            "image" => $image
         )
     );
     $response = "House information set up successfully";

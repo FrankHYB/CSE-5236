@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.course.easylease.PostHouse">
+    tools:context="com.example.course.easylease.PostHouse"
+    android:weightSum="1">
     <TextView
         android:layout_width="wrap_content"
         android:text="Name:"
@@ -65,14 +66,55 @@
         android:layout_width="wrap_content"
         android:text=""
         android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/bPost"
-        android:text="Post!"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/bCancel"
-        android:text="Cancel"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.50">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_1" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_2" />
+        <TextView
+            android:id="@+id/alert"
+            android:layout_width="wrap_content"
+            android:text = "Up to 2 images"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.11">
+
+        <Button
+            android:id="@+id/bPost"
+            android:text="Post!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bUploadImage"
+            android:text="Upload Images?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/bCancel"
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 </LinearLayout>
