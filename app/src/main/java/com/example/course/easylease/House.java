@@ -18,13 +18,15 @@ public class House {
     private String description;
     private Context appcontext;
     private int price;
+    private int rooms;
 
-    public House(String address, String zipCode, String name, String description, int price, Context context) {
+    public House(String address, String zipCode, String name, String description, int price,int rooms ,Context context) {
         this.address = address;
         this.zipCode = zipCode;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.rooms=rooms;
         appcontext = context;
         try {
             getLatLng(context);
@@ -91,7 +93,9 @@ public class House {
     public int getPrice() {
         return price;
     }
-
+    public int getRooms(){
+        return rooms;
+    }
     public void setPrice(int price) {
         this.price = price;
     }

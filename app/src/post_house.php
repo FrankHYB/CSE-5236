@@ -8,6 +8,8 @@ if(empty($_POST['user'])||empty($_POST['name'])||empty($_POST['address'])
     $address = $_POST['address'];
     $price = $_POST['price'];
     $price = intval($price);
+    $rooms = $_POST['rooms'];
+    $rooms = intval($rooms);
     $description = $_POST['description'];
     $zipcode = $_POST['zipcode'];
     $longtitude = $_POST['longtitude'];
@@ -25,6 +27,7 @@ if(empty($_POST['user'])||empty($_POST['name'])||empty($_POST['address'])
             "name" => $name,
             "address" => $address,
             "price" => $price,
+            "rooms" => $rooms,
             "description" => $description,
             "zipcode" => $zipcode,
             "longtitude" => $longtitude,

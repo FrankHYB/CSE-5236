@@ -1,5 +1,6 @@
 package com.example.course.easylease;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -71,6 +72,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private class LoginTask extends AsyncTask<Void, Void, Boolean> {
         boolean isNetworkSuccess = true;
+        private ProgressDialog progress;
+        @Override
+        protected void onPreExecute() {
+            progress = new ProgressDialog(Login.this, ProgressDialog.STYLE_SPINNER);
+            progress.show();
+            progress.setMessage("Loading ...");
+        }
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -85,6 +93,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            progress.dismiss();
             if (aBoolean && isNetworkSuccess) {
                 Intent main = new Intent(Login.this, MainActivity.class);
                 main.putExtra("username", Username.getText().toString());

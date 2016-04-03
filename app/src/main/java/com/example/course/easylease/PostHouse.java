@@ -1,7 +1,9 @@
 package com.example.course.easylease;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -29,12 +32,12 @@ import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
 public class PostHouse extends AppCompatActivity implements View.OnClickListener {
-    EditText Name, Address, Price, Description, Zipcode;
+    EditText Name, Address, Price, Rooms ,Description, Zipcode;
     TextView response, alert;
     Button bPost, bCancel,bUpload;
     ImageView image1;
     private String user;
-    private String name,address,price,description,zipcode,latitude,longtitude;
+    private String name,address,price,rooms,description,zipcode,latitude,longtitude;
     private Bitmap imageOne = null;
     private final int RESULT_CODE = 1;
     Context context;
@@ -46,6 +49,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         Address = (EditText) findViewById(R.id.Address);
         Zipcode = (EditText) findViewById(R.id.Zip);
         Price = (EditText) findViewById(R.id.Price);
+        Rooms = (EditText) findViewById(R.id.Rooms);
         Description = (EditText) findViewById(R.id.Description);
 
         response = (TextView) findViewById(R.id.response);
@@ -77,9 +81,11 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                 name = Name.getText().toString();
                 address = Address.getText().toString();
                 price = Price.getText().toString();
+                rooms = Rooms.getText().toString();
                 description = Description.getText().toString();
                 zipcode = Zipcode.getText().toString();
-                House house = new House(address,zipcode,name,description,Integer.parseInt(price),context);
+                House house = new House(address,zipcode,name,description,Integer.parseInt(price)
+                        ,Integer.parseInt(rooms), context);
                 longtitude = Double.toString(house.getLongitude());
                 latitude = Double.toString(house.getLatitude());
                 if(checkVaildity()){
@@ -95,6 +101,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                 }else{
                     alert.setVisibility(TextView.VISIBLE);
                 }
+                break;
             case R.id.bCancel:
                 finish();
                 break;
@@ -106,9 +113,14 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode == RESULT_CODE && resultCode == RESULT_OK && data!=null){
             Uri selectedImage = data.getData();
-            if(image1.getDrawable()==null) {
-                image1.setImageURI(selectedImage);
-                imageOne = ((BitmapDrawable) image1.getDrawable()).getBitmap();
+            try {
+                if(image1.getDrawable()==null) {
+                    imageOne = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    int newH = (int) (imageOne.getHeight() * (512.0 / imageOne.getWidth()));
+                    imageOne = Bitmap.createScaledBitmap(imageOne,512,newH,true);
+                    image1.setImageBitmap(imageOne);
+                }
+            }catch (IOException e){
             }
         }
 
@@ -124,8 +136,16 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
         String responseFromServer="";
         String encodeImage;
         Bitmap bitmap;
+        private ProgressDialog progress;
         public publishHouseInfo(Bitmap image){
             bitmap = image;
+            progress = new ProgressDialog(PostHouse.this, ProgressDialog.STYLE_HORIZONTAL);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progress.onStart();
+            progress.setMessage("Uploading ....");
         }
 
         @Override
@@ -142,6 +162,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                     .add("address", address)
                     .add("name", name)
                     .add("price", price)
+                    .add("rooms", rooms)
                     .add("zipcode", zipcode)
                     .add("description", description)
                     .add("longtitude", longtitude)
@@ -162,6 +183,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            progress.dismiss();
             if (isNetworkSuccess) {
                 response.setText(responseFromServer);
                 finish();
