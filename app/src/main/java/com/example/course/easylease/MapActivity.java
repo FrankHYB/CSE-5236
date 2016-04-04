@@ -1,8 +1,10 @@
 package com.example.course.easylease;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,14 +26,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 public class MapActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
-    private String json;
 
     private List<House> houses = new LinkedList<>();
     private List<MarkerOptions> markers = new LinkedList<>();
@@ -44,39 +49,9 @@ public class MapActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Bundle bundle = getIntent().getExtras();
+        new GetAllHouseInfoTask().execute();
 
-        if (!bundle.isEmpty() && !TextUtils.isEmpty(bundle.getString("json"))) {
-            json = bundle.getString("json");
 
-            try {
-                JSONArray array = new JSONArray(json);
-                int size = array.length();
-
-                for (int i = 0; i < size; i++) {
-                    JSONObject houseJSON = array.getJSONObject(i);
-
-                    House house = new House();
-                    house.setAppcontext(this);
-                    house.setLatitude(houseJSON.getDouble("latitude"));
-                    house.setLongitude(houseJSON.getDouble("longtitude"));
-                    house.setAddress(houseJSON.getString("address"));
-                    house.setZipCode(houseJSON.getString("zipcode"));
-                    house.setName(houseJSON.getString("name"));
-                    house.setDescription(houseJSON.getString("description"));
-                    house.setPrice(houseJSON.getInt("price"));
-
-                    markers.add(new MarkerOptions()
-                            .position(new LatLng(houseJSON.getDouble("latitude"),
-                                    houseJSON.getDouble("longtitude")))
-                            .title(houseJSON.getString("name")));
-
-                    houses.add(house);
-                }
-            } catch (JSONException e) {
-                // Should not happen
-            }
-        }
     }
 
     @Override
@@ -154,5 +129,69 @@ public class MapActivity extends AppCompatActivity
         }
 
         return -1;
+    }
+
+    private class GetAllHouseInfoTask extends AsyncTask<Void, Void, String> {
+        private boolean isSearchSuccess = true;
+        private ProgressDialog progress;
+        @Override
+        protected void onPreExecute() {
+            progress = new ProgressDialog(MapActivity.this, ProgressDialog.STYLE_SPINNER);
+            progress.show();
+            progress.setMessage("Loading Houses...");
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String url = "http://52.34.59.35/YBAndroid/Map_results.php";
+            RequestBody requestBody = new FormBody.Builder()
+                    .build();
+
+            try {
+                return HttpController.getInstance().run(url, requestBody);
+            } catch (IOException e) {
+                isSearchSuccess = false;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progress.dismiss();
+            if (isSearchSuccess) {
+                try {
+                        JSONArray array = new JSONArray(string);
+                        int size = array.length();
+
+                        for (int i = 0; i < size; i++) {
+                            JSONObject houseJSON = array.getJSONObject(i);
+
+                            House house = new House();
+                            house.setAppcontext(MapActivity.this);
+                            house.setLatitude(houseJSON.getDouble("latitude"));
+                            house.setLongitude(houseJSON.getDouble("longtitude"));
+                            house.setAddress(houseJSON.getString("address"));
+                            house.setZipCode(houseJSON.getString("zipcode"));
+                            house.setName(houseJSON.getString("name"));
+                            house.setDescription(houseJSON.getString("description"));
+                            house.setOwner(houseJSON.getString("owner"));
+                            house.setPrice(houseJSON.getInt("price"));
+
+                            markers.add(new MarkerOptions()
+                                    .position(new LatLng(houseJSON.getDouble("latitude"),
+                                            houseJSON.getDouble("longtitude")))
+                                    .title(houseJSON.getString("name")));
+
+                            houses.add(house);
+                        }
+
+                } catch (JSONException e) {
+                    Toast.makeText(MapActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(MapActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

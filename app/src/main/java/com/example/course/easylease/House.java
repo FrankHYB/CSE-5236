@@ -16,17 +16,19 @@ public class House {
     private String zipCode;
     private String name;
     private String description;
+    private String owner;
     private Context appcontext;
     private int price;
     private int rooms;
 
-    public House(String address, String zipCode, String name, String description, int price,int rooms ,Context context) {
+    public House(String address, String zipCode, String name, String description, int price,int rooms ,String owner,Context context) {
         this.address = address;
         this.zipCode = zipCode;
         this.name = name;
         this.description = description;
         this.price = price;
         this.rooms=rooms;
+        this.owner=owner;
         appcontext = context;
         try {
             getLatLng(context);
@@ -90,11 +92,17 @@ public class House {
         this.description = description;
     }
 
-    public int getPrice() {
-        return price;
+    public String getPrice() {
+        return Integer.toString(price);
     }
-    public int getRooms(){
-        return rooms;
+    public String getRooms(){
+        return Integer.toString(rooms);
+    }
+    public String getOwner(){
+        return this.owner;
+    }
+    public void setOwner(String owner){
+        this.owner = owner;
     }
     public void setPrice(int price) {
         this.price = price;
@@ -110,6 +118,8 @@ public class House {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", rooms=" + rooms +
+                ", owner=" + owner + '\'' +
                 '}';
     }
 

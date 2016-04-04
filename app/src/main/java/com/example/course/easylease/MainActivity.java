@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, Login.class));
                 break;
             case R.id.bFinder:
-
-                new GetAllHouseInfoTask().execute();
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.bPoster:
                 Intent postClass = new Intent(this, PostHouse.class);
@@ -81,47 +80,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private class GetAllHouseInfoTask extends AsyncTask<Void, Void, String> {
-        private boolean isSearchSuccess = true;
 
-        @Override
-        protected String doInBackground(Void... params) {
-            String url = "http://52.34.59.35/YBAndroid/query_houses.php";
-            RequestBody requestBody = new FormBody.Builder()
-                    .build();
-
-            try {
-                return HttpController.getInstance().run(url, requestBody);
-            } catch (IOException e) {
-                isSearchSuccess = false;
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String string) {
-            if (isSearchSuccess) {
-                try {
-                    int size = new JSONArray(string).length();
-
-                    if (size != 0) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("json", string);
-
-                        Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                        intent.putExtras(bundle);
-                        MainActivity.this.startActivity(intent);
-                        MainActivity.this.finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(MainActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(MainActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }

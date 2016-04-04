@@ -85,7 +85,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
                 description = Description.getText().toString();
                 zipcode = Zipcode.getText().toString();
                 House house = new House(address,zipcode,name,description,Integer.parseInt(price)
-                        ,Integer.parseInt(rooms), context);
+                        ,Integer.parseInt(rooms), user ,context);
                 longtitude = Double.toString(house.getLongitude());
                 latitude = Double.toString(house.getLatitude());
                 if(checkVaildity()){
@@ -144,7 +144,7 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
 
         @Override
         protected void onPreExecute() {
-            progress.onStart();
+            progress.show();
             progress.setMessage("Uploading ....");
         }
 
