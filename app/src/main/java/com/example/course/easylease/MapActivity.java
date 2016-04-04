@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
@@ -40,14 +42,14 @@ public class MapActivity extends AppCompatActivity
 
     private List<House> houses = new LinkedList<>();
     private List<MarkerOptions> markers = new LinkedList<>();
+    SupportMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
         new GetAllHouseInfoTask().execute();
 
@@ -97,12 +99,10 @@ public class MapActivity extends AppCompatActivity
     @Override
     public void onInfoWindowClick(Marker marker) {
         int index = indexOfHouse(marker.getTitle());
-
         if (index != -1) {
-            Bundle bundle = new Bundle();
-            bundle.putString("house_info", houses.get(index).toString());
+            //bundle.putString("house_info", houses.get(index).toString());
             Intent intent = new Intent(MapActivity.this, HouseDetailActivity.class);
-            intent.putExtras(bundle);
+            intent.putExtra("house_info",houses.get(index).toJsonString());
             startActivity(intent);
         }
     }
@@ -163,7 +163,7 @@ public class MapActivity extends AppCompatActivity
                 try {
                         JSONArray array = new JSONArray(string);
                         int size = array.length();
-
+                        Log.d("Json array length:", size+"");
                         for (int i = 0; i < size; i++) {
                             JSONObject houseJSON = array.getJSONObject(i);
 
@@ -192,6 +192,7 @@ public class MapActivity extends AppCompatActivity
             } else {
                 Toast.makeText(MapActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
             }
+            mapFragment.getMapAsync(MapActivity.this);
         }
     }
 }

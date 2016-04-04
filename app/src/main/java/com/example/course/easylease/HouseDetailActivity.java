@@ -29,28 +29,30 @@ public class HouseDetailActivity extends AppCompatActivity {
     private String houseInfo;
     private Bitmap image;
     private House house;
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_house_detail);
 
             houseInfo = getIntent().getExtras().getString("house_info");
-            parseHouseInfo(houseInfo);
-            Name = (TextView) findViewById(R.id.houseName);
-            Address = (TextView) findViewById(R.id.houseAddress);
-            Price = (TextView) findViewById(R.id.housePrice);
-            Rooms = (TextView) findViewById(R.id.houseRooms);
-            Owner = (TextView) findViewById(R.id.houseOwner);
-            Description = (TextView) findViewById(R.id.Description);
+            Name = (TextView) findViewById(R.id.name);
+            Address = (TextView) findViewById(R.id.address);
+            Price = (TextView) findViewById(R.id.price);
+            Rooms = (TextView) findViewById(R.id.rooms);
+            Owner = (TextView) findViewById(R.id.owner);
+            Description = (TextView) findViewById(R.id.description);
 
             Image = (ImageView) findViewById(R.id.pic);
-            setOutput(this.house);
+            parseHouseInfo(houseInfo);
+
             // if (textView != null) {
            //     textView.setText(houseInfo);
             //}
         }
     private void parseHouseInfo(String houseInfo){
-        try {
+            Gson gson = new Gson();
+            //this.house = gson.fromJson(houseInfo,House.class);
+        /*try {
             JSONObject jsonObject = new JSONObject(houseInfo);
 
             String name = jsonObject.getString("name");
@@ -60,11 +62,13 @@ public class HouseDetailActivity extends AppCompatActivity {
             String address = jsonObject.getString("address");
             String description = jsonObject.getString("description");
             String owner = jsonObject.getString("owner");
-            this.house = new House(address, zipcode, name, description, price,rooms,owner,this);
-            new GetImageFromServer(address).execute();
+            this.house = new House(address, zipcode, name, description, price, rooms, owner, this);
         }catch(JSONException e){
             e.printStackTrace();
-        }
+        }*/
+            house = gson.fromJson(houseInfo,House.class);
+            new GetImageFromServer(house.getAddress()).execute();
+
 
     }
     private void setOutput(House house){
@@ -121,6 +125,7 @@ public class HouseDetailActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(HouseDetailActivity.this, "Network error!", Toast.LENGTH_SHORT).show();
             }
+            setOutput(HouseDetailActivity.this.house);
         }
     }
 

@@ -6,6 +6,8 @@ import android.location.Geocoder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -110,19 +112,22 @@ public class House {
 
     @Override
     public String toString() {
-        return "House{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", address='" + address + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", rooms=" + rooms +
-                ", owner=" + owner + '\'' +
+        return "{" +
+                "latitude:" + latitude +
+                ", longitude:" + longitude +
+                ", address:'" + address + '\'' +
+                ", zipCode:'" + zipCode + '\'' +
+                ", name:'" + name + '\'' +
+                ", description:'" + description + '\'' +
+                ", price:" + price +
+                ", rooms:" + rooms +
+                ", owner:'" + owner + '\'' +
                 '}';
     }
-
+    public String toJsonString(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
     public void setAppcontext(Context appcontext) {
         this.appcontext = appcontext;
     }

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, Login.class));
                 break;
             case R.id.bFinder:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, MapActivity.class));
                 break;
             case R.id.bPoster:
                 Intent postClass = new Intent(this, PostHouse.class);
