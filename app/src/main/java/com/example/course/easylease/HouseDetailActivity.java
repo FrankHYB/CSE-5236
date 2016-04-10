@@ -115,7 +115,7 @@ public class HouseDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            if(isSearchSuccess && !s.equals("DB Error")) {
+            if(s!=null&&isSearchSuccess && !s.equals("DB Error")) {
                 if (!s.equals("")) {
                     InputStream stream = new ByteArrayInputStream(Base64.decode(s.getBytes(), Base64.DEFAULT));
                     HouseDetailActivity.this.image = BitmapFactory.decodeStream(stream, null, null);

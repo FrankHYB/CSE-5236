@@ -19,11 +19,10 @@ public class House {
     private String name;
     private String description;
     private String owner;
-    private Context appcontext;
     private int price;
     private int rooms;
 
-    public House(String address, String zipCode, String name, String description, int price,int rooms ,String owner,Context context) {
+    public House(String address, String zipCode, String name, String description, int price,int rooms ,String owner) {
         this.address = address;
         this.zipCode = zipCode;
         this.name = name;
@@ -31,11 +30,6 @@ public class House {
         this.price = price;
         this.rooms=rooms;
         this.owner=owner;
-        appcontext = SingletonContext.getInstance(context);
-        try {
-            getLatLng(context);
-        } catch (IOException e) {
-        }
     }
 
     public House() {
@@ -63,11 +57,6 @@ public class House {
 
     public void setAddress(String address) {
         this.address = address;
-
-        try {
-            getLatLng(appcontext);
-        } catch (IOException e) {
-        }
     }
 
     public String getZipCode() {
@@ -129,14 +118,6 @@ public class House {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
-    public void setAppcontext(Context appcontext) {
-        this.appcontext = SingletonContext.getInstance(appcontext);
-    }
 
-    private void getLatLng(Context context) throws IOException {
-        Geocoder geocoder = new Geocoder(context);
-        List<Address> addressList = geocoder.getFromLocationName(address, 1);
-        this.latitude = addressList.get(0).getLatitude();
-        this.longitude = addressList.get(0).getLongitude();
-    }
+
 }

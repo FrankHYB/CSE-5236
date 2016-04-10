@@ -14,6 +14,8 @@ if(!empty($_POST['address'])) {
     $result = $houses -> findOne(array("address" => $address), array("image" => true));
     if($result==null){
         $result = "DB Error";
+    }else{
+        $result = $result['image'];
     }
     $connection->close();
 }

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
@@ -78,33 +81,24 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bPost:
-                name = Name.getText().toString();
-                address = Address.getText().toString();
-                price = Price.getText().toString();
-                rooms = Rooms.getText().toString();
-                description = Description.getText().toString();
-                zipcode = Zipcode.getText().toString();
-                House house = new House(address,zipcode,name,description,Integer.parseInt(price)
-                        ,Integer.parseInt(rooms), user ,context);
-                longtitude = Double.toString(house.getLongitude());
-                latitude = Double.toString(house.getLatitude());
-                if(checkVaildity()){
+                setUpBasicInfo();
+                if (checkVaildity()) {
                     response.setText("Please fill up all fields");
-                }else {
+                } else {
                     new publishHouseInfo(imageOne).execute();
                 }
                 break;
             case R.id.bUploadImage:
-                if(image1.getDrawable() == null) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, this.RESULT_CODE);
-                }else{
-                    alert.setVisibility(TextView.VISIBLE);
-                }
-                break;
+                        if (image1.getDrawable() == null) {
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, this.RESULT_CODE);
+                        } else {
+                            alert.setVisibility(TextView.VISIBLE);
+                        }
+                        break;
             case R.id.bCancel:
-                finish();
-                break;
+                        finish();
+                        break;
         }
     }
 
@@ -126,9 +120,36 @@ public class PostHouse extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    private void setUpBasicInfo(){
+        name = Name.getText().toString();
+        address = Address.getText().toString();
+        price = Price.getText().toString();
+        rooms = Rooms.getText().toString();
+        description = Description.getText().toString();
+        zipcode = Zipcode.getText().toString();
+        House house = new House(address,zipcode,name,description,Integer.parseInt(price)
+                ,Integer.parseInt(rooms), user);
+        try {
+            getLatLng(house);
+        }catch(IOException e) {
+        }
+        longtitude = Double.toString(house.getLongitude());
+        latitude = Double.toString(house.getLatitude());
+    }
+
     private boolean checkVaildity(){
         return TextUtils.isEmpty(this.address) || TextUtils.isEmpty(this.name) || TextUtils.isEmpty(this.address)
                 || TextUtils.isEmpty(this.description) || TextUtils.isEmpty(this.zipcode) || TextUtils.isEmpty(this.user);
+    }
+
+
+    private void getLatLng(House house) throws IOException {
+        Geocoder geocoder = new Geocoder(context);
+        List<android.location.Address> addressList = geocoder.getFromLocationName(address, 1);
+        double latitude = addressList.get(0).getLatitude();
+        double longitude = addressList.get(0).getLongitude();
+        house.setLatitude(latitude);
+        house.setLongitude(longitude);
     }
 
     private class publishHouseInfo extends AsyncTask<Void, Void, Boolean> {

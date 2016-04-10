@@ -169,7 +169,6 @@ public class MapActivity extends AppCompatActivity
                             JSONObject houseJSON = array.getJSONObject(i);
 
                             House house = new House();
-                            house.setAppcontext(MapActivity.this);
                             house.setLatitude(houseJSON.getDouble("latitude"));
                             house.setLongitude(houseJSON.getDouble("longtitude"));
                             house.setAddress(houseJSON.getString("address"));
