@@ -102,7 +102,8 @@ public class MapActivity extends AppCompatActivity
         if (index != -1) {
             //bundle.putString("house_info", houses.get(index).toString());
             Intent intent = new Intent(MapActivity.this, HouseDetailActivity.class);
-            intent.putExtra("house_info",houses.get(index).toJsonString());
+            String house = houses.get(index).toJsonString();
+            intent.putExtra("house_info", house);
             startActivity(intent);
         }
     }
@@ -177,6 +178,7 @@ public class MapActivity extends AppCompatActivity
                             house.setDescription(houseJSON.getString("description"));
                             house.setOwner(houseJSON.getString("owner"));
                             house.setPrice(houseJSON.getInt("price"));
+                            house.setRooms(houseJSON.getInt("rooms"));
 
                             markers.add(new MarkerOptions()
                                     .position(new LatLng(houseJSON.getDouble("latitude"),

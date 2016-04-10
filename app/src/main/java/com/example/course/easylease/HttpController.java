@@ -9,7 +9,7 @@ import okhttp3.Response;
 import okhttp3.Request;
 
 
-public class HttpController {
+public class  HttpController {
 
     private static HttpController mInstance;
     private OkHttpClient client;

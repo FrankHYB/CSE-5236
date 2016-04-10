@@ -1,6 +1,7 @@
 package com.example.course.easylease;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText Username, Password;
     private TextView eMessage;
     private final String errorMessage = "Username or password is invalid";
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         eMessage = (TextView) findViewById(R.id.Error_message);
         bLogin.setOnClickListener(this);
         bSignUp.setOnClickListener(this);
+        context = SingletonContext.getInstance(getApplicationContext());
     }
 
     private boolean checkValidity(String username, String password) {

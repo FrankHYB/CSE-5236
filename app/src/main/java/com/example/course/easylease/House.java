@@ -31,7 +31,7 @@ public class House {
         this.price = price;
         this.rooms=rooms;
         this.owner=owner;
-        appcontext = context;
+        appcontext = SingletonContext.getInstance(context);
         try {
             getLatLng(context);
         } catch (IOException e) {
@@ -109,6 +109,7 @@ public class House {
     public void setPrice(int price) {
         this.price = price;
     }
+    public void setRooms(int room) {this.rooms = room;}
 
     @Override
     public String toString() {
@@ -126,10 +127,10 @@ public class House {
     }
     public String toJsonString(){
         Gson gson = new Gson();
-        return gson.toJson(this);
+        return gson.toJson();
     }
     public void setAppcontext(Context appcontext) {
-        this.appcontext = appcontext;
+        this.appcontext = SingletonContext.getInstance(appcontext);
     }
 
     private void getLatLng(Context context) throws IOException {
