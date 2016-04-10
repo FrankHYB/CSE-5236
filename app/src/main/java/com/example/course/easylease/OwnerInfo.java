@@ -60,14 +60,14 @@ public class OwnerInfo extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            progressDialog.dismiss();
             if(isSearchSuccess && response != null){
                 try {
                     JSONArray array = new JSONArray(response);
-                    tEmail.setText(array.getJSONObject(0).getString("email"));
-                    tPhone.setText(array.getJSONObject(1).getString("phoneNum"));
+                    tEmail.setText(array.get(0).toString());
+                    tPhone.setText(array.get(1).toString());
                 }catch(JSONException e){
                     Toast.makeText(OwnerInfo.this,"Json exception",Toast.LENGTH_SHORT).show();
-
                 }
             }else{
                 Toast.makeText(OwnerInfo.this,"Network error",Toast.LENGTH_SHORT).show();
