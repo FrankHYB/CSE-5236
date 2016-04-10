@@ -127,7 +127,7 @@ public class House {
     }
     public String toJsonString(){
         Gson gson = new Gson();
-        return gson.toJson();
+        return gson.toJson(this);
     }
     public void setAppcontext(Context appcontext) {
         this.appcontext = SingletonContext.getInstance(appcontext);
