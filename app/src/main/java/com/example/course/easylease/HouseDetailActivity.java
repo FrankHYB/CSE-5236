@@ -1,12 +1,14 @@
 package com.example.course.easylease;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,14 @@ public class HouseDetailActivity extends AppCompatActivity {
             Image = (ImageView) findViewById(R.id.pic);
             parseHouseInfo(houseInfo);
 
+            Owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(HouseDetailActivity.this,OwnerInfo.class);
+                    i.putExtra("owner",Owner.getText().toString());
+                    startActivity(i);
+                }
+            });
             // if (textView != null) {
            //     textView.setText(houseInfo);
             //}

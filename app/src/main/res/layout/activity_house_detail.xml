@@ -27,57 +27,92 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "Name:"
+                android:textColor="#92a4a4"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/houseName"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#219f9f"
+                android:textSize="24dp"
+                android:textStyle="italic"
                 android:id="@+id/name"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "Address:"
+                android:textColor="#92a4a4"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/houseAddress"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#219f9f"
+                android:textSize="24dp"
+                android:textStyle="italic"
                 android:id="@+id/address"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "Price:"
+                android:textColor="#92a4a4"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/housePrice"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#219f9f"
+                android:textSize="24dp"
+                android:textStyle="italic"
                 android:id="@+id/price"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "Rooms:"
+                android:textColor="#92a4a4"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/houseRooms"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#219f9f"
+                android:textSize="24dp"
+                android:textStyle="italic"
                 android:id="@+id/rooms"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "Description:"
+                android:textColor="#92a4a4"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/houseDescription"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
+                android:textColor="#219f9f"
+                android:textSize="24dp"
+                android:textStyle="italic"
                 android:id="@+id/description"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "Owner:"
+                android:textColor="#92a4a4"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:id="@+id/houseOwner"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:textColor="#219f9f"
+                android:textSize="24dp"
+                android:textStyle="italic"
                 android:id="@+id/owner"/>
             <ImageView
                 android:layout_width="wrap_content"

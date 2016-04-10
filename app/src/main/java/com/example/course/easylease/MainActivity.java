@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bLoginOut:
                 startActivity(new Intent(this, Login.class));
+                finish();
                 break;
             case R.id.bFinder:
                 startActivity(new Intent(this, MapActivity.class));
