@@ -36,7 +36,7 @@
         <activity android:name=".PostHouse" />
         <activity android:name=".HouseDetailActivity" />
         <activity android:name=".OwnerInfo"
-            android:theme = "@android:style/Theme.Dialog" />
+            android:theme = "@style/Theme.AppCompat.Dialog" />
     </application>
 
 </manifest>

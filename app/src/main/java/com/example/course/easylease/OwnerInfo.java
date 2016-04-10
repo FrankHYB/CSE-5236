@@ -64,9 +64,10 @@ public class OwnerInfo extends AppCompatActivity {
                 try {
                     JSONArray array = new JSONArray(response);
                     tEmail.setText(array.getJSONObject(0).getString("email"));
-                    tPhone.setText(array.getJSONObject(0).getString("phoneNum"));
+                    tPhone.setText(array.getJSONObject(1).getString("phoneNum"));
                 }catch(JSONException e){
-                    Toast.makeText(OwnerInfo.this,"JSON exception",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OwnerInfo.this,"Json exception",Toast.LENGTH_SHORT).show();
+
                 }
             }else{
                 Toast.makeText(OwnerInfo.this,"Network error",Toast.LENGTH_SHORT).show();

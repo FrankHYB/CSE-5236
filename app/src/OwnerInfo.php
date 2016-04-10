@@ -12,8 +12,8 @@ if(!empty($_POST['owner'])){
     $db = $connection->ybhe;
     $users = $db->androidUser;
     $query = $users->findOne(array('username'=>$owner),array('email'=>true,'phoneNum'=>true));
-    $response['email'] = $query['email'];
-    $response['phoneNum'] = $query['phoneNum'];
+    $response[0] = $query['email'];
+    $response[1] = $query['phoneNum'];
     $connection->close();
 }
 echo json_encode($response);
