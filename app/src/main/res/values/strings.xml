@@ -2,4 +2,5 @@
     <string name="app_name">EasyLease</string>
     <string name="title_activity_map">Map</string>
     <string name="action_search">Search</string>
+    <string name="facebook_app_id">941615805934250</string>
 </resources>

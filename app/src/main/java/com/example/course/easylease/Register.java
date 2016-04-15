@@ -1,5 +1,6 @@
 package com.example.course.easylease;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -61,10 +62,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private class LoginTask extends AsyncTask<Void, Void, Boolean> {
         private boolean isNetworkSuccess = true;
         String response = "";
-
+        ProgressDialog progressDialog = new ProgressDialog(Register.this);
         @Override
         protected void onPreExecute() {
-
+            progressDialog.setMessage("Loading");
+            progressDialog.show();
         }
 
         @Override
@@ -81,6 +83,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            progressDialog.dismiss();
             if (aBoolean && isNetworkSuccess) {
                 finish();
             } else if (!aBoolean) {

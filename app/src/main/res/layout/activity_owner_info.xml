@@ -41,4 +41,17 @@
         android:textStyle="italic"
         android:id="@+id/phoneNum"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Call the owner?"
+            android:id="@+id/phonecall"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send email?"
+            android:id="@+id/sendemail"
+            />
+
 </LinearLayout>

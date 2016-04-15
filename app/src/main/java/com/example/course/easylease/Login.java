@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +14,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.*;
@@ -26,19 +41,25 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private TextView eMessage;
     private final String errorMessage = "Username or password is invalid";
     private Context context;
+    String fbUsername, fbEmail,fbId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
+
         bLogin = (Button) findViewById(R.id.bLogin);
         bSignUp = (Button) findViewById(R.id.bSignUp);
         Username = (EditText) findViewById(R.id.Username);
         Password = (EditText) findViewById(R.id.Password);
         eMessage = (TextView) findViewById(R.id.Error_message);
+
         bLogin.setOnClickListener(this);
         bSignUp.setOnClickListener(this);
-        context = SingletonContext.getInstance(getApplicationContext());
+
+
     }
+
 
     private boolean checkValidity(String username, String password) {
         return !(TextUtils.isEmpty(username) || TextUtils.isEmpty(password));
@@ -69,6 +90,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.bSignUp:
                 startActivity(new Intent(this, Register.class));
                 break;
+
         }
     }
 
