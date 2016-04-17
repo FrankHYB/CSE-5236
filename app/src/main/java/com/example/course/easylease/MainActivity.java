@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent postClass = new Intent(this, PostHouse.class);
                 postClass.putExtra("username", user);
                 startActivity(postClass);
-                finish();
                 break;
         }
     }

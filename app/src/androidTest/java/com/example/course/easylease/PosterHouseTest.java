@@ -48,7 +48,6 @@ public class PosterHouseTest extends ActivityInstrumentationTestCase2<PostHouse>
 
         solo.clickOnButton(0);
         solo.waitForDialogToClose();
-        solo.assertCurrentActivity("Should be the Main activity", MainActivity.class);
     }
 
 }

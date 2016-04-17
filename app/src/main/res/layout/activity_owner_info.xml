@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Price:"
+        android:text = "Phone Number:"
         android:textColor="#92a4a4"
         android:textSize="16dp"
         android:textStyle="bold"

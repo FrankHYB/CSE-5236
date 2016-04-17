@@ -10,7 +10,7 @@ else {
     $db=$connection->ybhe;
     //Select the collecton
     $user=$db->androidUser;
-    $query=$user->findOne(array('username'=>$username,'password'=>$password));
+    $query=$user->findOne(array('username'=>$username,'password'=>md5($password)));
     if($query!=NULL){
         $response=$username;
     }else{

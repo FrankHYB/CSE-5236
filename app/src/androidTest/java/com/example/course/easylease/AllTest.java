@@ -18,7 +18,8 @@ public class AllTest extends ActivityInstrumentationTestCase2<Activity> {
         t.addTestSuite(LoginTest.class);
         t.addTestSuite(MainActivityTest.class);
         t.addTestSuite(PosterHouseTest.class);
-
+        t.addTestSuite(HouseDetailTest.class);
+        t.addTestSuite(OwnerInfoTest.class);
         return t;
     }
 

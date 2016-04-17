@@ -23,7 +23,7 @@ else{
     if($checkEmail==NULL && $checkUsername==NULL) {
         $user->insert(array(
                 "username" => $username,
-                "password" => $password,
+                "password" => md5($password),
                 "email" => $email,
                 "phoneNum"=>$phoneNum
             )
