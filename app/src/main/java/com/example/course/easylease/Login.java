@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         bLogin.setOnClickListener(this);
         bSignUp.setOnClickListener(this);
-
+        context = getApplicationContext();
 
     }
 
@@ -103,7 +103,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bLogin:
-                new LoginTask().execute();
+                if(hasNetworkConnection()) {
+                    new LoginTask().execute();
+                }else{
+                    Toast.makeText(context,"No network connection",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.bSignUp:
                 startActivity(new Intent(this, Register.class));

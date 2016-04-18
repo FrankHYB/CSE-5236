@@ -12,7 +12,7 @@ public class RegisterTest extends ActivityInstrumentationTestCase2<Register> {
     private Solo solo;
     private String username = "YUBIN",
             password = "Yubin-He",
-            email = "hyb940516@gmail.com",
+            email = "heyubinxx@163.com",
             phoneNum = "6146197998";
     @SuppressWarnings("unchecked")
     public RegisterTest(){

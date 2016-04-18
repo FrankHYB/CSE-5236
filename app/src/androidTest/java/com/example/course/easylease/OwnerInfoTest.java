@@ -35,7 +35,7 @@ public class OwnerInfoTest extends ActivityInstrumentationTestCase2<OwnerInfo> {
     public void testOwnerInfo(){
         solo.assertCurrentActivity("Should be OwnerInfo Activity",OwnerInfo.class);
         assertEquals("Email:", solo.getText(1).getText().toString());
-        assertEquals("he.922@osu.edu", solo.getText(2).getText().toString());
+        assertEquals("hyb940516@gmail.com", solo.getText(2).getText().toString());
         assertEquals("Phone Number:", solo.getText(3).getText().toString());
         assertEquals("6143900555", solo.getText(4).getText().toString());
 

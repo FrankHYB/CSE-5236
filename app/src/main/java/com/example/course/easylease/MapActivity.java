@@ -164,7 +164,7 @@ public class MapActivity extends AppCompatActivity
                 try {
                         JSONArray array = new JSONArray(string);
                         int size = array.length();
-                        Log.d("Json array length:", size+"");
+                            Log.d("Json array length:", size+"");
                         for (int i = 0; i < size; i++) {
                             JSONObject houseJSON = array.getJSONObject(i);
 
