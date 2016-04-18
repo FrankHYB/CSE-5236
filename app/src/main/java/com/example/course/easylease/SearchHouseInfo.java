@@ -1,6 +1,7 @@
 package com.example.course.easylease;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -55,12 +56,19 @@ public class SearchHouseInfo extends AppCompatActivity implements View.OnClickLi
 
     private class SearchHouseInfoTask extends AsyncTask<Integer, Void, String> {
         private boolean isSearchSuccess = true;
+        ProgressDialog progressDialog = new ProgressDialog(SearchHouseInfo.this,ProgressDialog.STYLE_SPINNER);
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Loading");
+            progressDialog.show();
+        }
 
         @Override
         protected String doInBackground(Integer... params) {
             int price = params[0];
 
-            String url = "http://52.34.59.35/YBAndroid/query_houses.php";
+            String url = "http://52.34.59.35/YBAndroid/Map_results.php";
             RequestBody requestBody = new FormBody.Builder()
                     .add("price", String.valueOf(price))
                     .build();
@@ -76,16 +84,15 @@ public class SearchHouseInfo extends AppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(String string) {
+            progressDialog.dismiss();
             if (isSearchSuccess) {
                 try {
                     int size = new JSONArray(string).length();
 
                     if (size != 0) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("json", string);
 
                         Intent intent = new Intent(SearchHouseInfo.this, MapActivity.class);
-                        intent.putExtras(bundle);
+                        intent.putExtra("houses",string);
                         SearchHouseInfo.this.startActivity(intent);
                     } else {
                         Toast.makeText(SearchHouseInfo.this, "No Result", Toast.LENGTH_SHORT).show();
