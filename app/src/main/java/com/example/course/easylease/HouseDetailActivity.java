@@ -1,9 +1,12 @@
 package com.example.course.easylease;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,31 +58,31 @@ public class HouseDetailActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             });
-            // if (textView != null) {
-           //     textView.setText(houseInfo);
-            //}
         }
     private void parseHouseInfo(String houseInfo){
             Gson gson = new Gson();
-            //this.house = gson.fromJson(houseInfo,House.class);
-        /*try {
-            JSONObject jsonObject = new JSONObject(houseInfo);
-
-            String name = jsonObject.getString("name");
-            String zipcode = jsonObject.getString("zipcode");
-            int rooms = Integer.parseInt(jsonObject.getString("rooms"));
-            int price = Integer.parseInt(jsonObject.getString("price"));
-            String address = jsonObject.getString("address");
-            String description = jsonObject.getString("description");
-            String owner = jsonObject.getString("owner");
-            this.house = new House(address, zipcode, name, description, price, rooms, owner, this);
-        }catch(JSONException e){
-            e.printStackTrace();
-        }*/
             house = gson.fromJson(houseInfo,House.class);
+        if(hasNetworkConnection()) {
             new GetImageFromServer(house.getAddress()).execute();
+        }else{
+            Toast.makeText(getApplicationContext(),"No Network Connection",Toast.LENGTH_SHORT).show();
+        }
 
 
+    }
+    private boolean hasNetworkConnection(){
+        ConnectivityManager connectivityManager	=
+                (ConnectivityManager)	getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo	=
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        boolean isWifiAvailable	=	networkInfo.isAvailable();
+        boolean isWifiConnected	=	networkInfo.isConnected();
+        networkInfo	=
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        boolean isMobileAvailable	=	networkInfo.isAvailable();
+        boolean isMobileConnnected	=	networkInfo.isConnected();
+
+        return (isWifiAvailable && isWifiConnected) || (isMobileAvailable && isMobileConnnected);
     }
     private void setOutput(House house){
         Name.setText(house.getName());

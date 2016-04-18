@@ -94,6 +94,7 @@ public class SearchHouseInfo extends AppCompatActivity implements View.OnClickLi
                         Intent intent = new Intent(SearchHouseInfo.this, MapActivity.class);
                         intent.putExtra("houses",string);
                         SearchHouseInfo.this.startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(SearchHouseInfo.this, "No Result", Toast.LENGTH_SHORT).show();
                     }

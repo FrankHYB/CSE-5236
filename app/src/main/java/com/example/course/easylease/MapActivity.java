@@ -2,8 +2,11 @@ package com.example.course.easylease;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -55,10 +58,14 @@ public class MapActivity extends AppCompatActivity
 
         Intent i = getIntent();
         if (i.hasExtra("houses")) {
-                jsonHandler(i.getStringExtra("houses"));
+            jsonHandler(i.getStringExtra("houses"));
 
-            } else {
+        }else{
+            if(hasNetworkConnection()) {
                 new GetAllHouseInfoTask().execute();
+            }else{
+                Toast.makeText(getApplicationContext(),"No Network Connection",Toast.LENGTH_SHORT).show();
+            }
         }
     }
     @Override
@@ -73,19 +80,9 @@ public class MapActivity extends AppCompatActivity
             case R.id.action_go_to_search:
                 Intent intent = new Intent(MapActivity.this, SearchHouseInfo.class);
                 startActivity(intent);
+                finish();
                 return true;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3);
-                }catch(InterruptedException e){
-
-                }
-                finish();
-            }
-        }).start();
         return super.onOptionsItemSelected(item);
     }
 
@@ -146,6 +143,20 @@ public class MapActivity extends AppCompatActivity
         }
 
         return -1;
+    }
+    private boolean hasNetworkConnection(){
+        ConnectivityManager connectivityManager	=
+                (ConnectivityManager)	getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo	=
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        boolean isWifiAvailable	=	networkInfo.isAvailable();
+        boolean isWifiConnected	=	networkInfo.isConnected();
+        networkInfo	=
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        boolean isMobileAvailable	=	networkInfo.isAvailable();
+        boolean isMobileConnnected	=	networkInfo.isConnected();
+
+        return (isWifiAvailable && isWifiConnected) || (isMobileAvailable && isMobileConnnected);
     }
     private void jsonHandler(String string){
         try {

@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,10 +47,27 @@ public class OwnerInfo extends AppCompatActivity implements View.OnClickListener
         btnPhoneCall.setOnClickListener(this);
         ownerName = getIntent().getExtras().getString("owner");
         context = getApplicationContext();
-        new GetOwnerInfo().execute();
+        if(hasNetworkConnection()) {
+            new GetOwnerInfo().execute();
+        }else{
+            Toast.makeText(context,"No Network Connection",Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private boolean hasNetworkConnection(){
+        ConnectivityManager connectivityManager	=
+                (ConnectivityManager)	getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo	=
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        boolean isWifiAvailable	=	networkInfo.isAvailable();
+        boolean isWifiConnected	=	networkInfo.isConnected();
+        networkInfo	=
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        boolean isMobileAvailable	=	networkInfo.isAvailable();
+        boolean isMobileConnnected	=	networkInfo.isConnected();
 
+        return (isWifiAvailable && isWifiConnected) || (isMobileAvailable && isMobileConnnected);
+    }
     @Override
     public void onClick(View v) {
         switch(v.getId()){
